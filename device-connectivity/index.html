@@ -629,6 +629,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-packaged-docker-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-Packaged Docker Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#provisioning-multiple-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provisioning Multiple Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raspberry-pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raspberry Pi
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -954,6 +1004,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-packaged-docker-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-Packaged Docker Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#provisioning-multiple-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provisioning Multiple Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raspberry-pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raspberry Pi
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -973,13 +1073,13 @@
 
 <h1 id="device-connectivity-to-fabric">Device Connectivity to Fabric<a class="headerlink" href="#device-connectivity-to-fabric" title="Permanent link">&para;</a></h1>
 <p>You manufacture a device — a robot, a sensor, a camera, a controller. You want it to be discoverable and controllable by AI agents and other devices on a Fabric mesh.</p>
-<p>This page shows you how to write a device driver, connect your device to a NATS server, and expose typed functions and events that agents can discover and call.</p>
+<p>This page shows you how to write a device driver, connect your device to the <a href="../infrastructure-setup/">Fabric mesh</a>, and expose typed functions and events that agents can discover and call.</p>
 <h2 id="what-your-device-becomes">What Your Device Becomes<a class="headerlink" href="#what-your-device-becomes" title="Permanent link">&para;</a></h2>
 <p>Once connected, your device:</p>
 <ul>
 <li><strong>Self-registers</strong> with the device registry (device type, functions, events, identity)</li>
 <li><strong>Maintains a heartbeat</strong> so the mesh knows it's alive</li>
-<li><strong>Receives RPC calls</strong> from agents or other devices (JSON-RPC over NATS)</li>
+<li><strong>Receives RPC calls</strong> from agents or other devices (JSON-RPC over the Fabric mesh)</li>
 <li><strong>Emits events</strong> that agents and other devices can subscribe to</li>
 <li><strong>Communicates device-to-device</strong> without going through a central orchestrator</li>
 </ul>
@@ -1061,7 +1161,7 @@
 </code></pre></div>
 <p>When this runs:</p>
 <ol>
-<li>Connects to NATS with JWT authentication</li>
+<li>Connects to the <a href="../infrastructure-setup/">Fabric mesh</a> with JWT authentication</li>
 <li>Registers with the device registry: <em>"I am temp-sensor-001, type temperature_sensor, I have <code>get_reading</code> and <code>threshold_alert</code>"</em></li>
 <li>Starts sending heartbeats</li>
 <li>Listens for incoming RPC calls on <code>fabric.default.temp-sensor-001.cmd</code></li>
@@ -1193,7 +1293,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaning_complete</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">&quot;zone-A&quot;</span><span class="p">,</span> <span class="n">duration_minutes</span><span class="o">=</span><span class="mf">12.5</span><span class="p">)</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">battery_low</span><span class="p">(</span><span class="n">battery_pct</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 </code></pre></div>
-<p>Events are published to <code>fabric.{tenant}.{device_id}.event.{event_name}</code> on NATS. Any subscriber — agent or device — receives them.</p>
+<p>Events are published to <code>fabric.{tenant}.{device_id}.event.{event_name}</code> on the <a href="../infrastructure-setup/">Fabric mesh</a>. Any subscriber — agent or device — receives them.</p>
 <h3 id="periodic-background-tasks">@periodic — Background Tasks<a class="headerlink" href="#periodic-background-tasks" title="Permanent link">&para;</a></h3>
 <p>Run a method on a fixed interval. Useful for polling sensors, emitting telemetry, or running health checks.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fabric_device.drivers</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeviceDriver</span><span class="p">,</span> <span class="n">rpc</span><span class="p">,</span> <span class="n">emit</span><span class="p">,</span> <span class="n">periodic</span>
@@ -1254,7 +1354,7 @@
 <a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Start cleaning a zone.&quot;&quot;&quot;</span>
 <a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;cleaning&quot;</span><span class="p">,</span> <span class="s2">&quot;zone&quot;</span><span class="p">:</span> <span class="n">zone</span><span class="p">}</span>
 </code></pre></div>
-<p>This is device-to-device communication. No agent involved. The camera emits <code>spill_detected</code>, the robot receives it directly over NATS and acts.</p>
+<p>This is device-to-device communication. No agent involved. The camera emits <code>spill_detected</code>, the robot receives it directly over the <a href="../infrastructure-setup/">Fabric mesh</a> and acts.</p>
 <h3 id="before_emit-intercept-events">@before_emit — Intercept Events<a class="headerlink" href="#before_emit-intercept-events" title="Permanent link">&para;</a></h3>
 <p>Filter or modify events before they're published. Return <code>False</code> to suppress an event.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fabric_device.drivers</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeviceDriver</span><span class="p">,</span> <span class="n">emit</span><span class="p">,</span> <span class="n">before_emit</span>
@@ -1280,18 +1380,18 @@
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="n">device_type</span> <span class="o">=</span> <span class="s2">&quot;robot&quot;</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Called after NATS connection is established, before RPCs start.&quot;&quot;&quot;</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Called after Fabric mesh connection is established, before RPCs start.&quot;&quot;&quot;</span>
 <a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_hardware</span> <span class="o">=</span> <span class="k">await</span> <span class="n">RobotSDK</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;/dev/ttyUSB0&quot;</span><span class="p">)</span>
 <a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hardware initialized&quot;</span><span class="p">)</span>
 <a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
 <a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Called during shutdown, before NATS disconnects.&quot;&quot;&quot;</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Called during shutdown, before Fabric mesh disconnects.&quot;&quot;&quot;</span>
 <a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hardware</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hardware released&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="running-the-device">Running the Device<a class="headerlink" href="#running-the-device" title="Permanent link">&para;</a></h2>
 <h3 id="deviceruntime">DeviceRuntime<a class="headerlink" href="#deviceruntime" title="Permanent link">&para;</a></h3>
-<p><code>DeviceRuntime</code> handles everything outside your driver logic: NATS connection, JWT authentication, device registration, heartbeats, command routing.</p>
+<p><code>DeviceRuntime</code> handles everything outside your driver logic: <a href="../infrastructure-setup/">Fabric mesh</a> connection, JWT authentication, device registration, heartbeats, command routing.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fabric_device</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeviceRuntime</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">device</span> <span class="o">=</span> <span class="n">DeviceRuntime</span><span class="p">(</span>
@@ -1325,7 +1425,7 @@
 <tr>
 <td><code>messaging_urls</code></td>
 <td><code>list[str]</code></td>
-<td>NATS server URLs</td>
+<td><a href="../infrastructure-setup/">Fabric mesh</a> URLs</td>
 </tr>
 <tr>
 <td><code>nats_credentials_file</code></td>
@@ -1345,7 +1445,7 @@
 </tbody>
 </table>
 <h3 id="credentials">Credentials<a class="headerlink" href="#credentials" title="Permanent link">&para;</a></h3>
-<p>Devices authenticate to NATS using JWT + NKey credentials. A <code>.creds.json</code> file:</p>
+<p>Devices authenticate to the <a href="../infrastructure-setup/">Fabric mesh</a> using JWT + NKey credentials. A <code>.creds.json</code> file:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;device_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;robot-001&quot;</span><span class="p">,</span>
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">&quot;auth_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jwt&quot;</span><span class="p">,</span>
@@ -1359,7 +1459,7 @@
 </code></pre></div>
 <p>Credentials are provisioned by the Fabric administrator and determine:</p>
 <ul>
-<li>Which NATS subjects the device can publish/subscribe to</li>
+<li>Which subjects the device can publish/subscribe to on the Fabric mesh</li>
 <li>Which tenant namespace it operates in</li>
 <li>Its identity for JWT authentication</li>
 </ul>
@@ -1406,7 +1506,7 @@
 <h2 id="what-happens-at-runtime">What Happens at Runtime<a class="headerlink" href="#what-happens-at-runtime" title="Permanent link">&para;</a></h2>
 <p>When <code>device.run()</code> is called, this is the sequence:</p>
 <ol>
-<li><strong>Connect to NATS</strong> — authenticates with JWT + NKey</li>
+<li><strong>Connect to <a href="../infrastructure-setup/">Fabric mesh</a></strong> — authenticates with JWT + NKey</li>
 <li><strong>Connect driver</strong> — calls your <code>connect()</code> method</li>
 <li><strong>Register</strong> — sends device identity, functions, and events to the registry</li>
 <li><strong>Subscribe to commands</strong> — listens on <code>fabric.{tenant}.{device_id}.cmd</code></li>
@@ -1420,7 +1520,7 @@
 <li>Periodic tasks stop</li>
 <li>Event subscriptions tear down</li>
 <li>Your <code>disconnect()</code> method runs</li>
-<li>NATS connection closes</li>
+<li>Fabric mesh connection closes</li>
 </ol>
 <h2 id="decorator-summary">Decorator Summary<a class="headerlink" href="#decorator-summary" title="Permanent link">&para;</a></h2>
 <table>
@@ -1453,6 +1553,110 @@
 </tr>
 </tbody>
 </table>
+<h2 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h2>
+<h3 id="pre-packaged-docker-container">Pre-Packaged Docker Container<a class="headerlink" href="#pre-packaged-docker-container" title="Permanent link">&para;</a></h3>
+<p>Package your device driver into a Docker image and push it to your container registry. New devices — whether cloud VMs, edge servers, or Raspberry Pis — pull the image and run. No Python install, no pip, no manual setup.</p>
+<p><strong>Dockerfile:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ai-fabric-device
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="k">COPY</span><span class="w"> </span>driver.py<span class="w"> </span>.
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;driver.py&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p><strong>Build and push:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># x86 (cloud / server)</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>your-registry.example.com/fabric/temp-sensor:latest<span class="w"> </span>.
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># ARM64 (Raspberry Pi / edge)</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>docker<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/arm64<span class="w"> </span>-t<span class="w"> </span>your-registry.example.com/fabric/temp-sensor:arm64<span class="w"> </span>.
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1"># Push both</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>docker<span class="w"> </span>push<span class="w"> </span>your-registry.example.com/fabric/temp-sensor:latest
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>docker<span class="w"> </span>push<span class="w"> </span>your-registry.example.com/fabric/temp-sensor:arm64
+</code></pre></div>
+<p><strong>Deploy on any new device — one command:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span>--name<span class="w"> </span>temp-sensor-001<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">FABRIC_MESH_URL</span><span class="o">=</span>nats://your-server:4222<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">DEVICE_ID</span><span class="o">=</span>temp-sensor-001<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span>-v<span class="w"> </span>/path/to/credentials/device.creds.json:/app/credentials/device.creds.json:ro<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span>--restart<span class="w"> </span>unless-stopped<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">  </span>your-registry.example.com/fabric/temp-sensor:latest
+</code></pre></div>
+<p>The device connects to the <a href="../infrastructure-setup/">Fabric mesh</a>, self-registers, and starts accepting RPC calls immediately.</p>
+<h3 id="provisioning-multiple-devices">Provisioning Multiple Devices<a class="headerlink" href="#provisioning-multiple-devices" title="Permanent link">&para;</a></h3>
+<p>Use docker-compose to bring up an entire fleet of devices at boot:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># docker-compose.yaml</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="nt">services</span><span class="p">:</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span><span class="nt">temp-sensor-001</span><span class="p">:</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-registry.example.com/fabric/temp-sensor:latest</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">FABRIC_MESH_URL=nats://your-server:4222</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEVICE_ID=temp-sensor-001</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./credentials/temp-sensor-001.creds.json:/app/credentials/device.creds.json:ro</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="w">  </span><span class="nt">camera-001</span><span class="p">:</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-registry.example.com/fabric/camera:latest</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">FABRIC_MESH_URL=nats://your-server:4222</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEVICE_ID=camera-001</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./credentials/camera-001.creds.json:/app/credentials/device.creds.json:ro</span>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p>Add a device by adding a service to the compose file and redeploying. Remove a device by removing its service. The <a href="../infrastructure-setup/">Fabric mesh</a> tracks what's online.</p>
+<h3 id="raspberry-pi">Raspberry Pi<a class="headerlink" href="#raspberry-pi" title="Permanent link">&para;</a></h3>
+<p>Docker runs natively on Raspberry Pi OS (64-bit). A new Pi goes from unboxed to connected in three steps:</p>
+<p><strong>1. Install Docker:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://get.docker.com<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span><span class="nv">$USER</span>
+</code></pre></div>
+<p><strong>2. Pull the pre-built ARM image:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>your-registry.example.com/fabric/temp-sensor:arm64
+</code></pre></div>
+<p><strong>3. Run:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span>--name<span class="w"> </span>temp-sensor-001<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">FABRIC_MESH_URL</span><span class="o">=</span>nats://your-server:4222<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">DEVICE_ID</span><span class="o">=</span>temp-sensor-001<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">  </span>-v<span class="w"> </span>/path/to/credentials/device.creds.json:/app/credentials/device.creds.json:ro<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">  </span>--restart<span class="w"> </span>unless-stopped<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">  </span>your-registry.example.com/fabric/temp-sensor:arm64
+</code></pre></div>
+<p><code>--restart unless-stopped</code> ensures the device driver survives reboots. The Pi connects to the <a href="../infrastructure-setup/">Fabric mesh</a> on every boot automatically.</p>
+<div class="admonition tip">
+<p class="admonition-title">Bare Metal</p>
+<p>If you can't run Docker (resource-constrained microcontrollers, custom Linux builds), install <code>ai-fabric-device</code> directly with pip and run as a systemd service:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>~/fabric-device
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="nb">source</span><span class="w"> </span>~/fabric-device/bin/activate
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>pip<span class="w"> </span>install<span class="w"> </span>ai-fabric-device
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># /etc/systemd/system/fabric-device.service</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">[Unit]</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="na">Description</span><span class="o">=</span><span class="s">AI Fabric Device Driver</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="na">After</span><span class="o">=</span><span class="s">network-online.target</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="na">Wants</span><span class="o">=</span><span class="s">network-online.target</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="k">[Service]</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="na">User</span><span class="o">=</span><span class="s">pi</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/home/pi/fabric-device/app</span>
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/home/pi/fabric-device/bin/python driver.py</span>
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="na">RestartSec</span><span class="o">=</span><span class="s">5</span>
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="k">[Install]</span>
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a><span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>fabric-device
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>fabric-device
+</code></pre></div>
+</div>
 
 
 

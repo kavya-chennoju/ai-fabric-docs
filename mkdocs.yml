@@ -43,6 +43,6 @@ markdown_extensions:
 nav:
   - Home: index.md
   - User Guide:
-    - Strands Integration: strands-integration.md
-    - Device Connectivity: device-connectivity.md
     - Fabric Mesh Setup: infrastructure-setup.md
+    - Device Connectivity: device-connectivity.md
+    - Strands Integration: strands-integration.md

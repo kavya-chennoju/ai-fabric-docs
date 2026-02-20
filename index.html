@@ -326,6 +326,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ai-fabric-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ai-fabric-agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ai-fabric-core" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -346,17 +357,6 @@
     <span class="md-ellipsis">
       
         How It Fits Together
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fabric-native-agent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fabric Native Agent
       
     </span>
   </a>
@@ -605,6 +605,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ai-fabric-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ai-fabric-agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ai-fabric-core" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -631,17 +642,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#fabric-native-agent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fabric Native Agent
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -660,11 +660,11 @@
 
 
 <h1 id="ai-fabric">AI Fabric<a class="headerlink" href="#ai-fabric" title="Permanent link">&para;</a></h1>
-<p>AI Fabric is a coordination layer for physical systems. Robots, cameras, sensors, and industrial controllers connect to a shared NATS mesh, expose typed functions and events, and become discoverable and controllable by AI agents — or by each other.</p>
-<p>There are three packages. Use the ones you need.</p>
+<p>AI Fabric is a coordination layer for physical systems. Robots, cameras, sensors, and industrial controllers connect to a shared <a href="infrastructure-setup/">Fabric mesh</a>, expose typed functions and events, and become discoverable and controllable by AI agents — or by each other.</p>
+<p>There are four packages. Use the ones you need.</p>
 <h2 id="packages">Packages<a class="headerlink" href="#packages" title="Permanent link">&para;</a></h2>
 <h3 id="ai-fabric-device">ai-fabric-device<a class="headerlink" href="#ai-fabric-device" title="Permanent link">&para;</a></h3>
-<p>The device SDK. Install this on your edge hardware — Raspberry Pi, robot, sensor, controller. Write a <code>DeviceDriver</code> subclass, decorate your methods, and the runtime handles NATS connection, registration, heartbeats, and command routing.</p>
+<p>The device SDK. Install this on your edge hardware — Raspberry Pi, robot, sensor, controller. Write a <code>DeviceDriver</code> subclass, decorate your methods, and the runtime handles connection, registration, heartbeats, and command routing.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ai-fabric-device
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fabric_device</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeviceRuntime</span>
@@ -699,41 +699,40 @@
 </code></pre></div>
 <p><a href="strands-integration/">Strands Integration Guide →</a></p>
 <hr />
-<h3 id="ai-fabric-core">ai-fabric-core<a class="headerlink" href="#ai-fabric-core" title="Permanent link">&para;</a></h3>
-<p>The server package. Extends <code>ai-fabric-device</code> with the device registry, security (commissioning, ACLs), distributed state (etcd), audit logging (MongoDB), and CLI tools (<code>devctl</code>, <code>statectl</code>). Install this on your server or admin workstation.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ai-fabric-core[all]&quot;</span>
+<h3 id="ai-fabric-agent">ai-fabric-agent<a class="headerlink" href="#ai-fabric-agent" title="Permanent link">&para;</a></h3>
+<p>The native agent. A batteries-included CLI daemon with inbuilt device discovery, deterministic event rules, multi-model support (Amazon Bedrock and Arm registry), LLM response caching (Redis), and goal inference from device capabilities. No code required — configure with CLI flags or a YAML file.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ai-fabric-agent
 </code></pre></div>
-<h2 id="how-it-fits-together">How It Fits Together<a class="headerlink" href="#how-it-fits-together" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>┌──────────────┐       ┌──────────────┐       ┌──────────────┐
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>│  Strands     │       │   Fabric     │       │   Devices    │
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>│  Agent       │       │   Server     │       │              │
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>│              │       │              │       │  robot-001   │
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>│  ai-fabric-  │──────▶│  NATS + JWT  │◀──────│  camera-002  │
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>│  tools       │ JSON- │  Registry    │ self- │  sensor-003  │
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>│              │ RPC   │  etcd        │ reg.  │              │
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>│              │       │              │       │  ai-fabric-  │
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>│              │       │  ai-fabric-  │       │  device      │
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>│              │       │  core        │       │              │
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>└──────────────┘       └──────────────┘       └──────────────┘
-</code></pre></div>
-<p><strong>Devices</strong> run <code>ai-fabric-device</code>, connect to NATS, self-register, and expose <code>@rpc</code> functions and <code>@emit</code> events.</p>
-<p><strong>Agents</strong> run <code>ai-fabric-tools</code>, discover devices on the mesh, and invoke their functions as part of the agent's normal reasoning loop.</p>
-<p><strong>The server</strong> runs <code>ai-fabric-core</code> with NATS (messaging), etcd (state), and the device registry. It routes messages and tracks which devices are online.</p>
-<p>No component knows about the internals of the other. Devices don't know they're being called by an AI agent. Agents don't know what protocol the device uses internally. NATS handles the routing.</p>
-<hr />
-<h2 id="fabric-native-agent">Fabric Native Agent<a class="headerlink" href="#fabric-native-agent" title="Permanent link">&para;</a></h2>
-<p>Don't want to wire up your own agent? The <strong>Fabric Native Agent</strong> is a batteries-included agent runtime with inbuilt device discovery, deterministic event rules, multi-model support (Amazon Bedrock and Arm registry), LLM response caching (Redis), and goal inference from device capabilities.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># native-agent.yaml</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nt">discovery</span><span class="p">:</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nt">model</span><span class="p">:</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bedrock</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us.anthropic.claude-sonnet-4-5-20250929-v1:0</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nt">cache</span><span class="p">:</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ai-fabric-agent<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--model-provider<span class="w"> </span>bedrock<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--model-id<span class="w"> </span>us.anthropic.claude-sonnet-4-5-20250929-v1:0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>--rules<span class="w"> </span>rules.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>--enable-caching<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span>--goal<span class="w"> </span><span class="s2">&quot;Keep the warehouse temperature between 18°C and 24°C&quot;</span>
 </code></pre></div>
 <p><a href="native-agent/">Fabric Native Agent Guide →</a></p>
+<hr />
+<h3 id="ai-fabric-core">ai-fabric-core<a class="headerlink" href="#ai-fabric-core" title="Permanent link">&para;</a></h3>
+<p>The server package. Extends <code>ai-fabric-device</code> with the device registry, security (commissioning, ACLs), distributed state (etcd), audit logging (MongoDB), and CLI tools (<code>devctl</code>, <code>statectl</code>). Install this on your server or admin workstation.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ai-fabric-core[all]&quot;</span>
+</code></pre></div>
+<h2 id="how-it-fits-together">How It Fits Together<a class="headerlink" href="#how-it-fits-together" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>┌──────────────┐       ┌──────────────┐       ┌──────────────┐
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>│  Native Agent│       │   Fabric     │       │   Devices    │
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>│  / Strands   │       │   Server     │       │              │
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>│  Agent       │       │              │       │  robot-001   │
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>│              │──────▶│  Fabric Mesh │◀──────│  camera-002  │
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>│  ai-fabric-  │ JSON- │  Registry    │ self- │  sensor-003  │
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>│  agent or    │ RPC   │  etcd        │ reg.  │              │
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>│  ai-fabric-  │       │              │       │  ai-fabric-  │
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>│  tools       │       │  ai-fabric-  │       │  device      │
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>│              │       │  core        │       │              │
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>└──────────────┘       └──────────────┘       └──────────────┘
+</code></pre></div>
+<p><strong>Devices</strong> run <code>ai-fabric-device</code>, connect to the <a href="infrastructure-setup/">Fabric mesh</a>, self-register, and expose <code>@rpc</code> functions and <code>@emit</code> events.</p>
+<p><strong>Agents</strong> run <code>ai-fabric-agent</code> (native agent) or <code>ai-fabric-tools</code> (Strands/LangChain), discover devices on the mesh, and invoke their functions as part of the agent's reasoning loop.</p>
+<p><strong>The server</strong> runs <code>ai-fabric-core</code> with the <a href="infrastructure-setup/">Fabric mesh</a> (messaging), etcd (state), and the device registry. It routes messages and tracks which devices are online.</p>
+<p>No component knows about the internals of the other. Devices don't know they're being called by an AI agent. Agents don't know what protocol the device uses internally. The <a href="infrastructure-setup/">Fabric mesh</a> handles the routing.</p>
 
 
 

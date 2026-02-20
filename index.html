@@ -352,6 +352,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#fabric-native-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fabric Native Agent
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -498,6 +509,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="native-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fabric Native Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -592,6 +631,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#fabric-native-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fabric Native Agent
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -670,6 +720,20 @@
 <p><strong>Agents</strong> run <code>ai-fabric-tools</code>, discover devices on the mesh, and invoke their functions as part of the agent's normal reasoning loop.</p>
 <p><strong>The server</strong> runs <code>ai-fabric-core</code> with NATS (messaging), etcd (state), and the device registry. It routes messages and tracks which devices are online.</p>
 <p>No component knows about the internals of the other. Devices don't know they're being called by an AI agent. Agents don't know what protocol the device uses internally. NATS handles the routing.</p>
+<hr />
+<h2 id="fabric-native-agent">Fabric Native Agent<a class="headerlink" href="#fabric-native-agent" title="Permanent link">&para;</a></h2>
+<p>Don't want to wire up your own agent? The <strong>Fabric Native Agent</strong> is a batteries-included agent runtime with inbuilt device discovery, deterministic event rules, multi-model support (Amazon Bedrock and Arm registry), LLM response caching (Redis), and goal inference from device capabilities.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># native-agent.yaml</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nt">discovery</span><span class="p">:</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nt">model</span><span class="p">:</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bedrock</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us.anthropic.claude-sonnet-4-5-20250929-v1:0</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nt">cache</span><span class="p">:</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis</span>
+</code></pre></div>
+<p><a href="native-agent/">Fabric Native Agent Guide →</a></p>
 
 
 

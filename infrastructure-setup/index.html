@@ -1,0 +1,1572 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Connect AI agents to physical devices">
+      
+      
+      
+      
+        <link rel="prev" href="../device-connectivity/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Fabric Mesh Setup - AI Fabric</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fabric-mesh-setup" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="AI Fabric" class="md-header__button md-logo" aria-label="AI Fabric" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Fabric
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fabric Mesh Setup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="AI Fabric" class="md-nav__button md-logo" aria-label="AI Fabric" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Fabric
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../strands-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Strands Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../device-connectivity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Device Connectivity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fabric Mesh Setup
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fabric Mesh Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start the Services
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Start the Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify-services-are-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify Services Are Running
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jwt-authentication-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JWT Authentication Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JWT Authentication Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-time-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One-Time Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credential-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credential File Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-registry-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Registry Service
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Device Registry Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-gets-stored-in-etcd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Gets Stored in etcd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nats-topic-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NATS Topic Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-commissioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Commissioning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Device Commissioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-factory-provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Factory Provisioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-commission-the-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Commission the Device
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Verify
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admin-cli-devctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Admin CLI — devctl
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Admin CLI — devctl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        List Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discover-uncommissioned-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discover Uncommissioned Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commission-a-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commission a Device
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register-a-test-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Register a Test Device
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interactive-repl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interactive REPL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-tenancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Tenancy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nats-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NATS Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcd-check-device-registrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        etcd — Check Device Registrations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#device-onlineoffline-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Online/Offline Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start the Services
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Start the Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify-services-are-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify Services Are Running
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jwt-authentication-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JWT Authentication Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JWT Authentication Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-time-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One-Time Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credential-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credential File Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-registry-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Registry Service
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Device Registry Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-gets-stored-in-etcd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Gets Stored in etcd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nats-topic-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NATS Topic Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-commissioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Commissioning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Device Commissioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-factory-provisioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Factory Provisioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-commission-the-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Commission the Device
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Verify
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admin-cli-devctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Admin CLI — devctl
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Admin CLI — devctl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        List Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discover-uncommissioned-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discover Uncommissioned Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commission-a-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commission a Device
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register-a-test-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Register a Test Device
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interactive-repl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interactive REPL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-tenancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Tenancy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nats-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NATS Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcd-check-device-registrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        etcd — Check Device Registrations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#device-onlineoffline-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Online/Offline Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="fabric-mesh-setup">Fabric Mesh Setup<a class="headerlink" href="#fabric-mesh-setup" title="Permanent link">&para;</a></h1>
+<p>You're the administrator. You need to stand up the Fabric mesh so that devices can register and agents can discover them.</p>
+<p>The infrastructure has three services:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>What it does</th>
+<th>Port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NATS</strong></td>
+<td>Message routing between devices and agents (JWT auth, TLS)</td>
+<td>4222</td>
+</tr>
+<tr>
+<td><strong>etcd</strong></td>
+<td>Stores device registrations with TTL leases</td>
+<td>2379</td>
+</tr>
+<tr>
+<td><strong>Device Registry Service</strong></td>
+<td>Listens for device registrations, tracks heartbeats, publishes online/offline events</td>
+<td>8080</td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Docker and Docker Compose</li>
+<li><code>nsc</code> — the NATS CLI tool for JWT/NKey management (<code>brew install nsc</code> or <code>go install github.com/nats-io/nsc/v2@latest</code>)</li>
+<li><code>ai-fabric-core</code> installed (<code>pip install "ai-fabric-core[security]"</code>)</li>
+</ul>
+<h2 id="start-the-services">Start the Services<a class="headerlink" href="#start-the-services" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>nats-jwt<span class="w"> </span>etcd<span class="w"> </span>device-registry-service<span class="w"> </span>-d
+</code></pre></div>
+<p>This starts:</p>
+<ul>
+<li><strong>nats-jwt</strong> — NATS 2.10 with JWT authentication enabled, using a generated resolver config</li>
+<li><strong>etcd</strong> — v3.5 key-value store for device registration persistence</li>
+<li><strong>device-registry-service</strong> — Python service that bridges NATS and etcd</li>
+</ul>
+<h3 id="verify-services-are-running">Verify Services Are Running<a class="headerlink" href="#verify-services-are-running" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>ps<span class="w"> </span>--format<span class="w"> </span><span class="s2">&quot;table {{.Names}}\t{{.Status}}\t{{.Ports}}&quot;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>NAMES                    STATUS              PORTS
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>device-registry-service  Up 5 minutes        0.0.0.0:8080-&gt;8080/tcp
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>nats-jwt                 Up 5 minutes        0.0.0.0:4222-&gt;4222/tcp, 6222/tcp, 8222/tcp
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>etcd                     Up 5 minutes        0.0.0.0:2379-2380-&gt;2379-2380/tcp
+</code></pre></div>
+<h2 id="jwt-authentication-setup">JWT Authentication Setup<a class="headerlink" href="#jwt-authentication-setup" title="Permanent link">&para;</a></h2>
+<p>NATS uses JWT + NKey authentication. Every device and agent gets a signed JWT that defines what NATS subjects it can publish and subscribe to.</p>
+<h3 id="one-time-setup">One-Time Setup<a class="headerlink" href="#one-time-setup" title="Permanent link">&para;</a></h3>
+<p>Initialize the NSC operator, account, and signing keys:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Set up the NATS JWT infrastructure</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>./setup_jwt_auth.sh<span class="w"> </span>dev
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Generate credentials for all built-in roles</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>./gen_creds.sh<span class="w"> </span>--all<span class="w"> </span>--force
+</code></pre></div>
+<p>This creates:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>security_infra/
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>├── credentials/
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>│   ├── devctl.creds.json          # Admin CLI credentials
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>│   ├── orchestrator.creds.json    # Agent/orchestrator credentials
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>│   └── registry.creds.json        # Registry service credentials
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>├── certs/
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>│   └── ca-cert.pem                # TLS CA certificate (if TLS enabled)
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>└── nats-jwt-generated.conf        # Generated NATS server config
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">nats-jwt-generated.conf Must Be a File</p>
+<p>Docker mounts this file into the NATS container. If it doesn't exist when you first run <code>docker compose up</code>, Docker will auto-create it as a <strong>directory</strong>, which breaks the mount. Always run <code>setup_jwt_auth.sh</code> before starting Docker. If you see mount errors, remove the directory and regenerate:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>rm<span class="w"> </span>-rf<span class="w"> </span>security_infra/nats-jwt-generated.conf
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>./setup_jwt_auth.sh<span class="w"> </span>dev
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>./gen_creds.sh<span class="w"> </span>--all<span class="w"> </span>--force
+</code></pre></div>
+</div>
+<h3 id="credential-file-format">Credential File Format<a class="headerlink" href="#credential-file-format" title="Permanent link">&para;</a></h3>
+<p>Each <code>.creds.json</code> file contains everything a client needs to authenticate:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;device_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;devctl&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;auth_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jwt&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">&quot;tenant&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">&quot;nats&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="nt">&quot;urls&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;nats://nats-jwt:4222&quot;</span><span class="p">],</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="nt">&quot;jwt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;eyJ0eXAiOiJKV1Qi...&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="nt">&quot;nkey_seed&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SUAE...&quot;</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">}</span>
+</code></pre></div>
+<p>The JWT encodes:</p>
+<ul>
+<li>Which NATS subjects this client can publish to</li>
+<li>Which subjects it can subscribe to</li>
+<li>Expiry time (default: 90 days)</li>
+<li>Account and user identity</li>
+</ul>
+<h2 id="device-registry-service">Device Registry Service<a class="headerlink" href="#device-registry-service" title="Permanent link">&para;</a></h2>
+<p>The registry service is a Python process that runs inside Docker. It:</p>
+<ol>
+<li>Subscribes to <code>fabric.{tenant}.registry</code> for device registration RPCs</li>
+<li>Subscribes to <code>fabric.{tenant}.discovery</code> for device discovery queries</li>
+<li>Subscribes to <code>fabric.{tenant}.*.heartbeat</code> for device heartbeats</li>
+<li>Stores device records in etcd with TTL leases</li>
+<li>Publishes <code>device/online</code> and <code>device/offline</code> events when devices join or leave</li>
+</ol>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Environment Variable</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TENANT</code></td>
+<td>Single tenant namespace</td>
+<td><code>default</code></td>
+</tr>
+<tr>
+<td><code>TENANTS</code></td>
+<td>Comma-separated list for multi-tenant</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>NATS_CREDENTIALS_FILE</code></td>
+<td>Path to registry <code>.creds.json</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>NATS_URLS</code></td>
+<td>NATS server URLs</td>
+<td><code>nats://nats-jwt:4222</code></td>
+</tr>
+<tr>
+<td><code>ETCD_HOST</code></td>
+<td>etcd hostname</td>
+<td><code>etcd</code></td>
+</tr>
+<tr>
+<td><code>ETCD_PORT</code></td>
+<td>etcd port</td>
+<td><code>2379</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-gets-stored-in-etcd">What Gets Stored in etcd<a class="headerlink" href="#what-gets-stored-in-etcd" title="Permanent link">&para;</a></h3>
+<p>Each device registration creates a key at <code>/fabric/{tenant}/devices/{device_id}</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;device_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;robot-001&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;device_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cleaning_robot&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">&quot;device_ttl&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">&quot;capabilities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="nt">&quot;functions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;start_cleaning&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Start cleaning a zone.&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">        </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;zone&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="p">],</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="nt">&quot;events&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cleaning_complete&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cleaning finished.&quot;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">  </span><span class="nt">&quot;identity&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">    </span><span class="nt">&quot;device_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cleaning_robot&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">    </span><span class="nt">&quot;manufacturer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RoboCorp&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CleanBot-3000&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="nt">&quot;firmware_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4.2.1&quot;</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="w">    </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;warehouse-B&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="w">    </span><span class="nt">&quot;availability&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;available&quot;</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="w">  </span><span class="nt">&quot;registry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="w">    </span><span class="nt">&quot;device_registration_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-...&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="w">    </span><span class="nt">&quot;registered_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-02-20T10:30:00Z&quot;</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a><span class="p">}</span>
+</code></pre></div>
+<p>The record has an etcd lease with TTL. If the device stops sending heartbeats, the lease expires and the registry publishes a <code>device/offline</code> event.</p>
+<h3 id="nats-topic-structure">NATS Topic Structure<a class="headerlink" href="#nats-topic-structure" title="Permanent link">&para;</a></h3>
+<p>All messaging follows this pattern:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>fabric.{tenant}.{device_id}.cmd              ← RPC calls to a device
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>fabric.{tenant}.{device_id}.event.{name}     ← Events from a device
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>fabric.{tenant}.{device_id}.heartbeat        ← Device heartbeats
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>fabric.{tenant}.registry                     ← Device registration RPCs
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>fabric.{tenant}.discovery                    ← Device discovery queries
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>fabric.{tenant}.device.online                ← Registry: device came online
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>fabric.{tenant}.device.offline               ← Registry: device went offline
+</code></pre></div>
+<h2 id="device-commissioning">Device Commissioning<a class="headerlink" href="#device-commissioning" title="Permanent link">&para;</a></h2>
+<p>New devices need credentials before they can join the mesh. The commissioning flow is:</p>
+<h3 id="1-factory-provisioning">1. Factory Provisioning<a class="headerlink" href="#1-factory-provisioning" title="Permanent link">&para;</a></h3>
+<p>Generate a device identity with a factory PIN:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>python<span class="w"> </span>provision_device.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>--device-id<span class="w"> </span>robot-001<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>--device-type<span class="w"> </span>cleaning_robot<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span>--capabilities<span class="w"> </span>start_cleaning,stop_cleaning,get_battery_level
+</code></pre></div>
+<p>This produces a <code>robot-001.identity.json</code> that gets burned onto the device. It contains:</p>
+<ul>
+<li>Device ID and type</li>
+<li>Ed25519 NKey keypair (public key + seed)</li>
+<li>8-digit factory PIN (bcrypt-hashed)</li>
+<li><code>commissioned: false</code></li>
+</ul>
+<h3 id="2-commission-the-device">2. Commission the Device<a class="headerlink" href="#2-commission-the-device" title="Permanent link">&para;</a></h3>
+<p>The device boots, reads its identity file, sees <code>commissioned: false</code>, and starts an HTTP commissioning server on port 5540.</p>
+<p>From your admin workstation:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Auto-discover via mDNS</label><label for="__tabbed_1_2">Specify device IP</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Find uncommissioned devices on the local network</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>devctl<span class="w"> </span>discover<span class="w"> </span>--timeout<span class="w"> </span><span class="m">5</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Commission with PIN (device found via mDNS)</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>devctl<span class="w"> </span>commission<span class="w"> </span>robot-001<span class="w"> </span>--pin<span class="w"> </span><span class="m">12345678</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>devctl<span class="w"> </span>commission<span class="w"> </span>robot-001<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>--pin<span class="w"> </span><span class="m">12345678</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>--device-ip<span class="w"> </span><span class="m">192</span>.168.1.50
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>What happens:</p>
+<ol>
+<li><code>devctl</code> contacts the device at <code>http://{ip}:5540/info</code> to get its NKey public key</li>
+<li>Generates a JWT signed for this device</li>
+<li>POSTs the JWT + credentials to <code>http://{ip}:5540/commission</code> with the PIN</li>
+<li>Device validates the PIN (bcrypt, 3 attempts max, 1-hour lockout)</li>
+<li>Device saves credentials to disk (<code>~/.fabric/credentials/robot-001.creds.json</code>)</li>
+<li>Device connects to NATS and self-registers</li>
+</ol>
+<h3 id="3-verify">3. Verify<a class="headerlink" href="#3-verify" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>devctl<span class="w"> </span>list
+</code></pre></div>
+<p>The device should appear in the registry.</p>
+<h2 id="admin-cli-devctl">Admin CLI — devctl<a class="headerlink" href="#admin-cli-devctl" title="Permanent link">&para;</a></h2>
+<p><code>devctl</code> is the admin command-line tool for managing the Fabric mesh. Installed with <code>ai-fabric-core</code>.</p>
+<h3 id="list-devices">List Devices<a class="headerlink" href="#list-devices" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Full output</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>devctl<span class="w"> </span>list
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># Compact — one line per device with functions and events</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>devctl<span class="w"> </span>list<span class="w"> </span>--compact
+</code></pre></div>
+<h3 id="discover-uncommissioned-devices">Discover Uncommissioned Devices<a class="headerlink" href="#discover-uncommissioned-devices" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>devctl<span class="w"> </span>discover<span class="w"> </span>--timeout<span class="w"> </span><span class="m">10</span>
+</code></pre></div>
+<p>Scans the local network via mDNS for devices running commissioning servers.</p>
+<div class="admonition note">
+<p class="admonition-title">Requires ai-fabric-core[security]</p>
+<p>Discovery and commissioning require the security extras: <code>pip install "ai-fabric-core[security]"</code></p>
+</div>
+<h3 id="commission-a-device">Commission a Device<a class="headerlink" href="#commission-a-device" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>devctl<span class="w"> </span>commission<span class="w"> </span>&lt;device_id&gt;<span class="w"> </span>--pin<span class="w"> </span>&lt;pin&gt;<span class="w"> </span><span class="o">[</span>--device-ip<span class="w"> </span>&lt;ip&gt;<span class="o">]</span>
+</code></pre></div>
+<h3 id="register-a-test-device">Register a Test Device<a class="headerlink" href="#register-a-test-device" title="Permanent link">&para;</a></h3>
+<p>For testing without real hardware:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Register and immediately exit</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>devctl<span class="w"> </span>register<span class="w"> </span>--id<span class="w"> </span>test-device-001
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Register and keep alive (sends heartbeats)</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>devctl<span class="w"> </span>register<span class="w"> </span>--id<span class="w"> </span>test-device-001<span class="w"> </span>--keepalive
+</code></pre></div>
+<h3 id="interactive-repl">Interactive REPL<a class="headerlink" href="#interactive-repl" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>devctl<span class="w"> </span>interactive
+</code></pre></div>
+<p>Opens an interactive session for calling device functions, listing devices, and debugging the mesh.</p>
+<h3 id="configuration_1">Configuration<a class="headerlink" href="#configuration_1" title="Permanent link">&para;</a></h3>
+<p><code>devctl</code> reads from environment variables:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NATS_URL</code></td>
+<td>NATS server URL</td>
+<td><code>nats://localhost:4222</code></td>
+</tr>
+<tr>
+<td><code>NATS_CREDENTIALS_FILE</code></td>
+<td>Admin credentials file</td>
+<td>auto-discover</td>
+</tr>
+<tr>
+<td><code>TENANT</code></td>
+<td>Namespace</td>
+<td><code>default</code></td>
+</tr>
+<tr>
+<td><code>DEVICE_TTL</code></td>
+<td>Heartbeat timeout (seconds)</td>
+<td><code>15</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="multi-tenancy">Multi-Tenancy<a class="headerlink" href="#multi-tenancy" title="Permanent link">&para;</a></h2>
+<p>The mesh supports multiple tenants. Each tenant is a separate namespace — devices in one tenant are invisible to another.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Registry service handles multiple tenants</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nv">TENANTS</span><span class="o">=</span>warehouse,factory,lab<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>device-registry-service<span class="w"> </span>-d
+</code></pre></div>
+<p>NATS subject scoping ensures isolation:</p>
+<ul>
+<li>Warehouse agent credentials: can only access <code>fabric.warehouse.*</code></li>
+<li>Factory agent credentials: can only access <code>fabric.factory.*</code></li>
+</ul>
+<p>Tenant scoping is enforced at the NATS JWT level. Even if an agent knows a device ID in another tenant, the NATS server will deny the message.</p>
+<h2 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h2>
+<h3 id="nats-monitoring">NATS Monitoring<a class="headerlink" href="#nats-monitoring" title="Permanent link">&para;</a></h3>
+<p>NATS exposes an HTTP monitoring endpoint on port 8222:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Server info</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>curl<span class="w"> </span>http://localhost:8222/varz
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># Active connections</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>curl<span class="w"> </span>http://localhost:8222/connz
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="c1"># Active subscriptions</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>curl<span class="w"> </span>http://localhost:8222/subsz
+</code></pre></div>
+<h3 id="etcd-check-device-registrations">etcd — Check Device Registrations<a class="headerlink" href="#etcd-check-device-registrations" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># List all devices in default tenant</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>etcdctl<span class="w"> </span>get<span class="w"> </span>/fabric/default/devices/<span class="w"> </span>--prefix<span class="w"> </span>--print-value-only<span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Watch for registration changes</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>etcdctl<span class="w"> </span>watch<span class="w"> </span>/fabric/default/devices/<span class="w"> </span>--prefix
+</code></pre></div>
+<h3 id="device-onlineoffline-events">Device Online/Offline Events<a class="headerlink" href="#device-onlineoffline-events" title="Permanent link">&para;</a></h3>
+<p>Subscribe to registry lifecycle events:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Using nats CLI</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>nats<span class="w"> </span>sub<span class="w"> </span><span class="s2">&quot;fabric.default.device.&gt;&quot;</span>
+</code></pre></div>
+<p>You'll see <code>device/online</code> when a device registers and <code>device/offline</code> when its heartbeat lease expires.</p>
+<h2 id="security-checklist">Security Checklist<a class="headerlink" href="#security-checklist" title="Permanent link">&para;</a></h2>
+<p>Before going to production:</p>
+<ul>
+<li>[ ] TLS enabled on NATS (<code>tls://</code> URLs, CA certificates distributed)</li>
+<li>[ ] Credential files have <code>0600</code> permissions (owner read/write only)</li>
+<li>[ ] NSC keys backed up and stored securely</li>
+<li>[ ] JWT expiry set to a reasonable window (not indefinite)</li>
+<li>[ ] Each device has unique credentials (no shared JWTs)</li>
+<li>[ ] <code>allow_insecure=False</code> on all production devices</li>
+<li>[ ] Multi-tenant scoping if running multiple fleets</li>
+<li>[ ] etcd authentication enabled</li>
+<li>[ ] Commissioning PINs are single-use and randomly generated</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
